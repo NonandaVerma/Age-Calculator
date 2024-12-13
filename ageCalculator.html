@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age calculator</title>
+    <style>
+
+        *{
+            margin:0px;
+            padding:0px;
+            font-family: sans-serif;
+
+        }
+        .main{
+            width:500px;
+            background-color: skyblue;
+            margin:20px auto;
+        }
+
+        .main h2{
+            padding:10px;
+            text-align: center;
+        }
+
+        input{
+            width:35%;
+            height:30px;
+            margin:10px 20px;
+        }
+
+        button{
+            margin:10px 20px;
+            width:85%;
+            height:40px;
+            background-color:blue;
+            color:#fff;
+            border:none;
+            outline:none;
+            cursor: pointer;
+        }
+
+        label{
+            padding:10px 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main">
+
+        <h2> Age calculator</h2>
+
+        <input type="date" name="" id="userDate">
+        <input type="time" name="" id="userBirthTime">
+        <br>
+        <button onclick="calcAge()">Calculate age</button>
+
+        <h2>Result in:</h2>
+
+        <label for="years"> Years: </label>
+        <input type="text" name="" id="years">
+        </br>
+
+        <label for="months"> Months: </label>
+        <input type="text" name="" id="months">
+         </br>
+
+        <label for="days"> Days: </label>
+        <input type="text" name="" id="days">
+        </br>
+
+        <label for="hours"> Hours: </label>
+        <input type="text" name="" id="hours">
+        </br>
+
+        <label for="minutes"> Minutes: </label>
+        <input type="text" name="" id="minutes">
+         </br>
+
+        <label for="seconds"> Seconds: </label>
+        <input type="text" name="" id="seconds">
+        </br>
+
+    </div>
+    
+</body>
+
+<script>
+
+    //here time is taken just in case the user want exact age, but if user doesn't provide any time value from their hand then it wont show error but it will assume the default time to be 00-00-00
+
+    let calcAge=()=>{
+
+        let userDate=document.querySelector("#userDate").value;
+        let userBirthTime=document.querySelector("#userBirthTime").value;
+
+        let resultYear=document.querySelector("#years");
+        let resultMonth=document.querySelector("#months");
+        let resultDay=document.querySelector("#days");
+
+        let resultHour=document.querySelector("#hours");
+        let resultMinute=document.querySelector("#minutes");
+        let resultSec=document.querySelector("#seconds");
+
+        let currentTime = new Date();  //fetching current date time from system
+
+        let userTimeZone = new Date(userDate +" "+userBirthTime);  //note that if you dont take space here then it will show invalid date as output and also if you globally fetch the above date and time input from user and thenn console userTime zone then also it shows invalid date as output
+
+        let timeDiff = currentTime - userTimeZone;
+
+        let years = Math.floor(timeDiff/(1000*3600*24*365.25)); //here 3600=60*60 and 365.25 is to count year, but .25 means it will automatically count leap year. as the above code without math.floor gave answer in decimals so to round off it
+        //to display the result in year input
+
+        let months = Math.floor(timeDiff % (1000*3600*24*365.25) / (1000*3600*24*30));  //here mod taken to fetch the reamining seconds and then years calculated which is then divided back with same value and note that there is *30 bcz assuming that every month has 30 days 
+
+    
+        let days = Math.floor(timeDiff % (1000*3600*24*30) / (1000*3600*24)); //the remiander of month and then dividing to get days
+
+        let hours = Math.floor(timeDiff % (1000*3600*24) / (1000*3600));  
+        let minutes = Math.floor(timeDiff % (1000*3600) / (1000*60)); 
+        let seconds = Math.floor(timeDiff % (1000*60) / (1000)); 
+
+        resultYear.value  = years;
+        resultMonth.value = months;  
+        resultDay.value = days; 
+
+        resultHour.value = hours; 
+        resultMinute.value = minutes; 
+        resultSec.value = seconds; 
+
+    }
+
+    //
+
+</script>
+</html>
